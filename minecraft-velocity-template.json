@@ -1,0 +1,82 @@
+{
+  "name": "minecraft-velocity-server",
+  "display": "velocity - minecraft server",
+  "type": "minecraft-java",
+  "install": [
+    {
+      "files": [
+        "https://papermc.io/api/v2/projects/velocity/versions/${server-version}/builds/${build-number}/downloads/velocity-${server-version}-${build-number}.jar"
+      ],
+      "type": "download"
+    },
+    {
+      "source": "velocity-*.jar",
+      "target": "server.jar",
+      "type": "move"
+    },
+    {
+      "target": "velocity.toml",
+      "text": "bind: \"${server-address}:${server-port}\"",
+      "type": "writefile"
+    }
+  ],
+  "run": {
+    "stop": "end",
+    "command": "/usr/lib/jvm/java-${java-version}-openjdk-amd64/bin/java -Xmx${max-memory}M -Xms${min-memory}M -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=40 -XX:G1MaxNewSizePercent=50 -XX:G1HeapRegionSize=16M -XX:G1ReservePercent=15 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=20 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -jar server.jar",
+    "workingDirectory": "",
+    "pre": [],
+    "post": [],
+    "environmentVars": {}
+  },
+  "data": {
+    "build-number": {
+      "type": "string",
+      "desc": "Velocity server build number, see https://papermc.io/downloads",
+      "display": "Server build number",
+      "required": true,
+      "value": "137"
+    },
+    "server-address": {
+      "type": "string",
+      "desc": "What IP to bind the server to",
+      "display": "Server IP address",
+      "required": true,
+      "value": "localhost"
+    },
+    "min-memory": {
+      "type": "integer",
+      "desc": "How much minimum memory in MB to allocate to the Java Heap?",
+      "display": "Minimum memory in MB",
+      "required": true,
+      "value": "128"
+    },
+    "server-port": {
+      "type": "integer",
+      "desc": "What port to bind the server to",
+      "display": "Server port",
+      "required": true,
+      "value": "25565"
+    },
+    "server-version": {
+      "type": "string",
+      "desc": "Paper server version, see https://papermc.io/downloads",
+      "display": "Server version",
+      "required": true,
+      "value": "3.1.2-SNAPSHOT"
+    },
+    "max-memory": {
+      "display": "Maximum memory in MB",
+      "type": "integer",
+      "value": "4096",
+      "desc": "How much maximum memory in MB to allocate to the Java Heap?"
+    }
+  },
+  "environment": {
+    "type": "standard"
+  },
+  "supportedEnvironments": [
+    {
+      "type": "standard"
+    }
+  ]
+}
