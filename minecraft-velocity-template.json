@@ -69,6 +69,12 @@
       "type": "integer",
       "value": "4096",
       "desc": "How much maximum memory in MB to allocate to the Java Heap?"
+    },
+    "java-version": {
+      "display": "Java version",
+      "type": "integer",
+      "value": "11",
+      "desc": "Java version, which will launch the server"
     }
   },
   "environment": {
