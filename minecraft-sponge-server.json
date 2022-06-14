@@ -1,0 +1,95 @@
+{
+  "name": "minecraft-sponge-server",
+  "display": "sponge - minecraft server",
+  "type": "minecraft-java",
+  "install": [
+    {
+      "files": [
+        "https://repo.spongepowered.org/repository/maven-releases/org/spongepowered/spongevanilla/${sponge-mc-version}-${sponge-api-version}-${build-number}/spongevanilla-${sponge-mc-version}-${sponge-api-version}-${build-release}-universal.jar"
+      ],
+      "type": "download"
+    },
+    {
+      "source": "spongevanilla-*.jar",
+      "target": "server.jar",
+      "type": "move"
+    },
+    {
+      "target": "server.properties",
+      "text": "server-ip=${server-address}\nserver-port=${server-port}",
+      "type": "writefile"
+    },
+  ],
+  "run": {
+    "stop": "stop",
+    "command": "/usr/lib/jvm/java-${java-version}-openjdk-amd64/bin/java -Xmx${max-memory}M -Xms${min-memory}M -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=40 -XX:G1MaxNewSizePercent=50 -XX:G1HeapRegionSize=16M -XX:G1ReservePercent=15 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=20 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -jar server.jar",
+    "workingDirectory": "",
+    "pre": [],
+    "post": [],
+    "environmentVars": {}
+  },
+  "data": {
+    "build-number": {
+      "type": "string",
+      "desc": "Sponge server build number, see https://www.spongepowered.org/downloads/",
+      "display": "Server build number",
+      "required": true,
+      "value": "137"
+    },
+    "server-address": {
+      "type": "string",
+      "desc": "What IP to bind the server to",
+      "display": "Server IP address",
+      "required": true,
+      "value": "localhost"
+    },
+    "min-memory": {
+      "type": "integer",
+      "desc": "How much minimum memory in MB to allocate to the Java Heap?",
+      "display": "Minimum memory in MB",
+      "required": true,
+      "value": "128"
+    },
+    "server-port": {
+      "type": "integer",
+      "desc": "What port to bind the server to",
+      "display": "Server port",
+      "required": true,
+      "value": "25565"
+    },
+    "sponge-mc-version": {
+      "type": "string",
+      "desc": "Sponge minecraft server version, see https://www.spongepowered.org/downloads/",
+      "display": "Server version",
+      "required": true,
+      "value": "1.16.5"
+    },
+    "sponge-api-version": {
+      "type": "string",
+      "desc": "Sponge API version, see https://www.spongepowered.org/downloads/",
+      "display": "API version",
+      "required": true,
+      "value": "8.1.0"
+    },
+    "max-memory": {
+      "display": "Maximum memory in MB",
+      "type": "integer",
+      "value": "4096",
+      "desc": "How much maximum memory in MB to allocate to the Java Heap?"
+    },
+    "java-version": {
+      "display": "Java version",
+      "type": "integer",
+      "value": "16",
+      "desc": "Java version, which will launch the server"
+    }
+  },
+  "environment": {
+    "type": "standard"
+  },
+  "supportedEnvironments": [
+    {
+      "type": "standard"
+    }
+  ]
+}
